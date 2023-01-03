@@ -6,24 +6,17 @@
 #    By: hyungjup <hyungjup@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/28 14:50:14 by hyungjup          #+#    #+#              #
-#    Updated: 2022/12/28 14:50:16 by hyungjup         ###   ########.fr        #
+#    Updated: 2023/01/03 15:19:48 by hyungjup         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libftprintf.a
+NAME = pipex
 
 CC = cc
 CFLAG = -Wall -Wextra -Werror
 RM = rm -f
-AR = ar
-ARFLAGS = rcs
 
-SRCS = ft_printf.c \
-		ft_print_hex.c \
-		ft_print_ptr.c \
-		ft_print_unsigned.c \
-		ft_printf_utils.c \
-		ft_putnbr_base.c
+SRCS = 
 
 OBJS = $(SRCS:.c=.o)
 
