@@ -6,41 +6,69 @@
 /*   By: hyungjup <hyungjup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:23:54 by hyungjup          #+#    #+#             */
-/*   Updated: 2023/01/03 17:52:12 by hyungjup         ###   ########.fr       */
+/*   Updated: 2023/01/05 17:17:27 by hyungjup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	pid1_execute(int *fd, char *av[], char *envp[])
+void	fd1(t_pipex pipex, char *av[], char *envp[])
 {
-	int	file_in;
+	dup2(pipex.fd[1], 1);
+	close(pipex.fd[0]);
+	dup2(pipex.file_in, 0);
+	pipex.cmd_args = ft_split(av[2], ' ');
+	pipex.cmd = find_cmd(pipex.paths, pipex.cmd_args[0]);
+	if (pipex.cmd == 0)
+	{
+		child_process_free(&pipex);
+		error_message("Command not found\n");
+	}
+	execve(pipex.cmd, pipex.cmd_args, envp);
+}
 
-	file_in = open(av[1], O_RDONLY);
-	if (file_in < 0)
-		ft_error("input file error");
-	if (dup2(fd[1], STDOUT_FILENO) == -1)
-		ft_error("error");
-	if (dup2(fd[1], STDIN_FILENO) == -1)
-		ft_error("error");
-	close(file_in);
-	close(fd[0]);
-	close(fd[1]);
+void	fd2(t_pipex pipex, char *av[], char *envp[])
+{
+	dup2(pipex.fd[0], 0);
+	close(pipex.fd[1]);
+	dup2(pipex.file_out, 1);
+	pipex.cmd_args = ft_split(av[3], ' ');
+	pipex.cmd = find_cmd(pipex.paths, pipex.cmd_args[0]);
+	if (pipex.cmd == 0)
+	{
+		parent_process_free(&pipex);
+		error_message("Command not found\n");
+	}
+	execve(pipex.cmd, pipex.cmd_args, envp);
+}
+
+void	close_pipes(t_pipex *pipex)
+{
+	close(pipex->fd[0]);
+	close(pipex->fd[1]);
 }
 
 int	main(int ac, char *av[], char *envp[])
 {
-	int	fd[2];
-	int	pid1;
-	int	pid2;
+	t_pipex	pipex;
 
 	if (ac != 5)
-		return (ft_error("Error: wrong count of arguments\n"));
-	if (pipe(fd) == -1)
-		ft_perror("error");
-	pid1 = fork();
-	if (pid1 == -1)
-		ft_perror("error");
-	if (pid1 == 0)
-		pid1_execute(fd, av, envp);
+		return (ft_perror("Error"));
+	pipex.file_in = open(av[1], O_RDONLY);
+	if (pipex.file_in < 0)
+		error_message("Infile Error");
+	pipex.file_out = open(av[ac - 1], O_TRUNC | O_CREAT | O_RDWR, 0644);
+	if (pipex.file_out < 0)
+		error_message("Outfile Error");
+	if (pipe(pipex.fd) < 0)
+		error_message("Pipe Error");
+	pipex.paths = find_paths(envp);
+	pipex.cmd_paths = ft_split(pipex.paths, ':');
+	pipex.pid1 = fork();
+	if (pipex.pid1 == 0)
+		fd1(pipex, av, envp);
+	pipex.pid2 = fork();
+	if (pipex.pid2 == 0)
+		fd2(pipex, av, envp);
+	close_pipes(&pipex);
 }

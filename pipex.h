@@ -6,7 +6,7 @@
 /*   By: hyungjup <hyungjup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 11:22:32 by hyungjup          #+#    #+#             */
-/*   Updated: 2023/01/03 17:46:32 by hyungjup         ###   ########.fr       */
+/*   Updated: 2023/01/05 16:46:13 by hyungjup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,31 @@
 
 typedef struct s_pipex
 {
+	pid_t	pid1;
+	pid_t	pid2;
 	int		fd[2];
-	int		ac;
-	char	**av;
-	char	**envp;
-	pid_t	pid;
 	int		file_in;
 	int		file_out;
-	int		offset;
-}	t_pipex
+	char	*paths;
+	char	*cmd;
+	char	**cmd_paths;
+	char	**cmd_args;
 
-int	ft_put_error(char *str);
-int	main(int ac, char *av[], char *envp[]);
-int	init_pipex(int ac, char **av, char **envp, t_pipex *pipex);
+}	t_pipex;
+
+int		error_message(char *str);
+int		ft_perror(char *str);
+char	*find_paths(char **envp);
+char	*find_cmd(char **path, char *cmd);
+void	parent_process_free(t_pipex *pipex);
+void	child_process_free(t_pipex *pipex);
+char	**ft_split(char const *str, char c);
+void	fd1(t_pipex pipex, char *av[], char *envp[]);
+void	fd2(t_pipex pipex, char *av[], char *envp[]);
+void	fd2(t_pipex pipex, char *av[], char *envp[]);
+int		main(int ac, char *av[], char *envp[]);
+int		ft_strlen(char *str);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+char	*ft_strjoin(char *s1, char *s2);
 
 #endif
