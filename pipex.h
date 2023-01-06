@@ -6,7 +6,7 @@
 /*   By: hyungjup <hyungjup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 11:22:32 by hyungjup          #+#    #+#             */
-/*   Updated: 2023/01/05 16:46:13 by hyungjup         ###   ########.fr       */
+/*   Updated: 2023/01/06 18:37:45 by hyungjup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@
 
 typedef struct s_pipex
 {
-	pid_t	pid1;
-	pid_t	pid2;
+	pid_t	pid;
 	int		fd[2];
 	int		file_in;
 	int		file_out;

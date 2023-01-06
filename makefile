@@ -6,7 +6,7 @@
 #    By: hyungjup <hyungjup@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/28 14:50:14 by hyungjup          #+#    #+#              #
-#    Updated: 2023/01/05 16:48:55 by hyungjup         ###   ########.fr        #
+#    Updated: 2023/01/06 17:25:02 by hyungjup         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,18 +29,25 @@ HEADER = pipex.h
 
 all : $(NAME)
 
-$(NAME) : $(OBJS)
-	ar rc $@ $^
+$(NAME): $(OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	@echo "$(GREEN)$(NAME) created!"
 
-%.o : %.c
-	$(CC) $(CFLAG) -c $< -o $@ -I $(HEADER)
+%.o : %.c $(HEADER)
+	@${CC} ${CFLAG} -c $< -o $@
 
 clean :
-	$(RM) $(RMFLAG) $(OBJS)
+	@$(RM) $(RMFLAG) $(OBJS)
+	@echo "$(YELLOW)object files deleted!"
 
 fclean : clean
-	$(RM) $(RMFLAG) $(NAME)
+	@$(RM) $(NAME)
+	@echo "$(RED)all deleted"
 
 re : fclean all
 
  .PHONY : all clean fclean re
+
+RED = \033[1;31m
+GREEN = \033[1;32m
+YELLOW = \033[0;33m
