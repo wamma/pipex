@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyungjup <hyungjup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/05 14:29:04 by hyungjup          #+#    #+#             */
-/*   Updated: 2023/01/05 14:29:38 by hyungjup         ###   ########.fr       */
+/*   Created: 2023/01/10 16:43:44 by hyungjup          #+#    #+#             */
+/*   Updated: 2023/01/10 16:43:57 by hyungjup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char	*str_word_print(char const *str, char c)
 	return (word);
 }
 
-void	free_split(char **arr, int index)
+static void	free_split(char **arr, int index)
 {
 	int	i;
 

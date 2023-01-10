@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyungjup <hyungjup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/05 09:59:26 by hyungjup          #+#    #+#             */
-/*   Updated: 2023/01/05 15:44:51 by hyungjup         ###   ########.fr       */
+/*   Created: 2023/01/10 13:48:34 by hyungjup          #+#    #+#             */
+/*   Updated: 2023/01/10 16:30:49 by hyungjup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	ft_strlen(char *str)
+int	ft_strlen(const char *str)
 {
 	int	i;
 

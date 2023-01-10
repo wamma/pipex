@@ -5,38 +5,39 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyungjup <hyungjup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/05 15:28:30 by hyungjup          #+#    #+#             */
-/*   Updated: 2023/01/05 15:31:36 by hyungjup         ###   ########.fr       */
+/*   Created: 2023/01/10 14:47:41 by hyungjup          #+#    #+#             */
+/*   Updated: 2023/01/10 15:41:32 by hyungjup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	parent_process_free(t_pipex *pipex)
+void	ft_child_free(t_pipex pipex)
 {
 	int	i;
 
 	i = 0;
-	close(pipex->file_in);
-	close(pipex->file_out);
-	while (pipex->cmd_paths[i])
+	while (pipex.cmd_args[i])
 	{
-		free(pipex->cmd_paths[i]);
+		free(pipex.cmd_args[i]);
 		i++;
 	}
-	free(pipex->cmd_paths);
+	free(pipex.cmd_args);
+	free(pipex.cmd);
 }
 
-void	child_process_free(t_pipex *pipex)
+void	ft_parent_free(t_pipex pipex)
 {
 	int	i;
 
 	i = 0;
-	while (pipex->cmd_args[i])
+	close(pipex.infile);
+	close(pipex.outfile);
+	while (pipex.cmd_paths[i])
 	{
-		free(pipex->cmd_args[i]);
+		free(pipex.cmd_paths[i]);
 		i++;
 	}
-	free(pipex->cmd_args);
-	free(pipex->cmd);
+	free(pipex.cmd_args);
+	free(pipex.cmd);
 }

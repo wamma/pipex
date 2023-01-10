@@ -5,23 +5,21 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyungjup <hyungjup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/02 11:50:48 by hyungjup          #+#    #+#             */
-/*   Updated: 2023/01/06 18:37:51 by hyungjup         ###   ########.fr       */
+/*   Created: 2023/01/10 13:47:04 by hyungjup          #+#    #+#             */
+/*   Updated: 2023/01/10 13:49:16 by hyungjup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	ft_perror(char *str)
+void	ft_perror(char *err)
 {
-	perror(str);
+	perror(err);
 	exit (1);
 }
 
-int	error_message(char *str)
+int	error_msg(char *err)
 {
-	write(2, strerror(errno), ft_strlen(strerror(errno)));
-	write(2, " : ", 3);
-	write(2, str, ft_strlen(str));
+	write(2, err, ft_strlen(err));
 	return (1);
 }

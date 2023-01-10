@@ -5,14 +5,14 @@
 #                                                     +:+ +:+         +:+      #
 #    By: hyungjup <hyungjup@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/12/28 14:50:14 by hyungjup          #+#    #+#              #
-#    Updated: 2023/01/06 17:25:02 by hyungjup         ###   ########.fr        #
+#    Created: 2023/01/10 15:21:03 by hyungjup          #+#    #+#              #
+#    Updated: 2023/01/10 16:43:12 by hyungjup         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 
-CC = cc
+CC = cc -g
 CFLAG = -Wall -Wextra -Werror
 RM = rm -f
 
@@ -21,7 +21,7 @@ SRCS = pipex.c \
 		find.c \
 		free.c \
 		ft_split.c \
-		utils.c 
+		utils.c  \
 
 OBJS = $(SRCS:.c=.o)
 
@@ -46,7 +46,7 @@ fclean : clean
 
 re : fclean all
 
- .PHONY : all clean fclean re
+.PHONY : all clean fclean re
 
 RED = \033[1;31m
 GREEN = \033[1;32m
