@@ -6,7 +6,7 @@
 /*   By: hyungjup <hyungjup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:41:48 by hyungjup          #+#    #+#             */
-/*   Updated: 2023/01/10 16:44:08 by hyungjup         ###   ########.fr       */
+/*   Updated: 2023/01/11 10:49:06 by hyungjup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int		ft_strlen(const char *str);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strjoin(char *s1, char *s2);
 /*error.c*/
-void	ft_perror(char *err);
 int		error_msg(char *err);
 /*find.c*/
 char	*find_path(char **envp);

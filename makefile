@@ -6,13 +6,13 @@
 #    By: hyungjup <hyungjup@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 15:21:03 by hyungjup          #+#    #+#              #
-#    Updated: 2023/01/10 16:43:12 by hyungjup         ###   ########.fr        #
+#    Updated: 2023/01/12 11:05:07 by hyungjup         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 
-CC = cc -g
+CC = cc
 CFLAG = -Wall -Wextra -Werror
 RM = rm -f
 
