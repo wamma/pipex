@@ -1,42 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyungjup <hyungjup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/13 12:47:56 by hyungjup          #+#    #+#             */
-/*   Updated: 2023/01/16 11:46:54 by hyungjup         ###   ########.fr       */
+/*   Created: 2022/11/10 16:13:56 by hyungjup          #+#    #+#             */
+/*   Updated: 2022/11/18 16:33:05 by hyungjup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	ft_child_free(t_pipex pipex)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	int	i;
+	char	*tmp;
+	int		real_len;
+	int		i;
 
+	real_len = len;
 	i = 0;
-	while (pipex.cmd_args[i])
+	if (ft_strlen(s) <= start)
+		return (ft_strdup(""));
+	if (ft_strlen(s + start) < len)
+		real_len = ft_strlen(s + start);
+	tmp = (char *)malloc(sizeof(char) * real_len + 1);
+	if (!tmp)
+		return (NULL);
+	while (i < real_len)
 	{
-		free(pipex.cmd_args[i]);
+		tmp[i] = s[start + i];
 		i++;
 	}
-	free(pipex.cmd_args);
-	free(pipex.cmd);
-}
-
-void	ft_parent_free(t_pipex pipex)
-{
-	int	i;
-
-	i = 0;
-	close(pipex.infile);
-	close(pipex.outfile);
-	while (pipex.cmd_paths[i])
-	{
-		free(pipex.cmd_paths[i]);
-		i++;
-	}
-	free(pipex.cmd_paths);
+	tmp[i] = '\0';
+	return (tmp);
 }

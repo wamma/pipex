@@ -1,42 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyungjup <hyungjup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/13 12:47:56 by hyungjup          #+#    #+#             */
-/*   Updated: 2023/01/16 11:46:54 by hyungjup         ###   ########.fr       */
+/*   Created: 2022/11/08 20:22:01 by hyungjup          #+#    #+#             */
+/*   Updated: 2022/11/23 11:55:54 by hyungjup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	ft_child_free(t_pipex pipex)
+char	*ft_strrchr(const char *s, int c)
 {
-	int	i;
+	size_t	s_len;
 
-	i = 0;
-	while (pipex.cmd_args[i])
-	{
-		free(pipex.cmd_args[i]);
-		i++;
-	}
-	free(pipex.cmd_args);
-	free(pipex.cmd);
-}
-
-void	ft_parent_free(t_pipex pipex)
-{
-	int	i;
-
-	i = 0;
-	close(pipex.infile);
-	close(pipex.outfile);
-	while (pipex.cmd_paths[i])
-	{
-		free(pipex.cmd_paths[i]);
-		i++;
-	}
-	free(pipex.cmd_paths);
+	s_len = ft_strlen(s);
+	while (s_len != 0 && s[s_len] != (char)c)
+		s_len--;
+	if (s[s_len] == (char)c)
+		return ((char *)(s + s_len));
+	return (NULL);
 }

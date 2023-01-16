@@ -1,42 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyungjup <hyungjup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/13 12:47:56 by hyungjup          #+#    #+#             */
-/*   Updated: 2023/01/16 11:46:54 by hyungjup         ###   ########.fr       */
+/*   Created: 2022/11/15 16:56:25 by hyungjup          #+#    #+#             */
+/*   Updated: 2022/11/17 16:55:36 by hyungjup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	ft_child_free(t_pipex pipex)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	int	i;
+	t_list	*new;
 
-	i = 0;
-	while (pipex.cmd_args[i])
+	if (!lst || !del)
+		return ;
+	while (*lst)
 	{
-		free(pipex.cmd_args[i]);
-		i++;
+		new = (*lst)->next;
+		ft_lstdelone(*lst, del);
+		*lst = new;
 	}
-	free(pipex.cmd_args);
-	free(pipex.cmd);
-}
-
-void	ft_parent_free(t_pipex pipex)
-{
-	int	i;
-
-	i = 0;
-	close(pipex.infile);
-	close(pipex.outfile);
-	while (pipex.cmd_paths[i])
-	{
-		free(pipex.cmd_paths[i]);
-		i++;
-	}
-	free(pipex.cmd_paths);
+	*lst = NULL;
 }

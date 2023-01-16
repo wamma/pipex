@@ -1,42 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyungjup <hyungjup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/13 12:47:56 by hyungjup          #+#    #+#             */
-/*   Updated: 2023/01/16 11:46:54 by hyungjup         ###   ########.fr       */
+/*   Created: 2022/11/08 19:48:31 by hyungjup          #+#    #+#             */
+/*   Updated: 2022/11/09 12:37:01 by hyungjup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	ft_child_free(t_pipex pipex)
+int	ft_isalpha(int c)
 {
-	int	i;
-
-	i = 0;
-	while (pipex.cmd_args[i])
-	{
-		free(pipex.cmd_args[i]);
-		i++;
-	}
-	free(pipex.cmd_args);
-	free(pipex.cmd);
-}
-
-void	ft_parent_free(t_pipex pipex)
-{
-	int	i;
-
-	i = 0;
-	close(pipex.infile);
-	close(pipex.outfile);
-	while (pipex.cmd_paths[i])
-	{
-		free(pipex.cmd_paths[i]);
-		i++;
-	}
-	free(pipex.cmd_paths);
+	if (('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z'))
+		return (1);
+	return (0);
 }

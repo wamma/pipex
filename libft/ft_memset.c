@@ -1,42 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyungjup <hyungjup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/13 12:47:56 by hyungjup          #+#    #+#             */
-/*   Updated: 2023/01/16 11:46:54 by hyungjup         ###   ########.fr       */
+/*   Created: 2022/11/08 21:18:10 by hyungjup          #+#    #+#             */
+/*   Updated: 2022/11/23 11:32:05 by hyungjup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	ft_child_free(t_pipex pipex)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	int	i;
+	size_t			i;
+	unsigned char	*dest;
 
 	i = 0;
-	while (pipex.cmd_args[i])
+	dest = (unsigned char *)b;
+	while (i < len)
 	{
-		free(pipex.cmd_args[i]);
+		dest[i] = (unsigned char)c;
 		i++;
 	}
-	free(pipex.cmd_args);
-	free(pipex.cmd);
-}
-
-void	ft_parent_free(t_pipex pipex)
-{
-	int	i;
-
-	i = 0;
-	close(pipex.infile);
-	close(pipex.outfile);
-	while (pipex.cmd_paths[i])
-	{
-		free(pipex.cmd_paths[i]);
-		i++;
-	}
-	free(pipex.cmd_paths);
+	return (dest);
 }

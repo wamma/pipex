@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyungjup <hyungjup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/10 13:47:04 by hyungjup          #+#    #+#             */
-/*   Updated: 2023/01/11 10:52:16 by hyungjup         ###   ########.fr       */
+/*   Created: 2023/01/12 16:21:07 by hyungjup          #+#    #+#             */
+/*   Updated: 2023/01/16 14:34:49 by hyungjup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	error_msg(char *err)
+int	ft_error(char *err)
 {
 	write(2, err, ft_strlen(err));
 	exit (1);

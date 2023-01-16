@@ -1,42 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyungjup <hyungjup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/13 12:47:56 by hyungjup          #+#    #+#             */
-/*   Updated: 2023/01/16 11:46:54 by hyungjup         ###   ########.fr       */
+/*   Created: 2022/11/14 11:45:35 by hyungjup          #+#    #+#             */
+/*   Updated: 2022/11/17 15:07:10 by hyungjup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	ft_child_free(t_pipex pipex)
+static unsigned int	ft_abs(int n)
 {
-	int	i;
-
-	i = 0;
-	while (pipex.cmd_args[i])
-	{
-		free(pipex.cmd_args[i]);
-		i++;
-	}
-	free(pipex.cmd_args);
-	free(pipex.cmd);
+	if (n < 0)
+		return (n *= -1);
+	else
+		return (n);
 }
 
-void	ft_parent_free(t_pipex pipex)
+void	ft_putnbr_fd(int n, int fd)
 {
-	int	i;
+	unsigned int	tmp;
 
-	i = 0;
-	close(pipex.infile);
-	close(pipex.outfile);
-	while (pipex.cmd_paths[i])
+	if (n < 0)
+		ft_putchar_fd('-', fd);
+	tmp = ft_abs(n);
+	if (tmp >= 10)
 	{
-		free(pipex.cmd_paths[i]);
-		i++;
+		ft_putnbr_fd(tmp / 10, fd);
+		ft_putnbr_fd(tmp % 10, fd);
 	}
-	free(pipex.cmd_paths);
+	else
+		ft_putchar_fd(tmp + '0', fd);
 }

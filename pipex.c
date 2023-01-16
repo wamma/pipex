@@ -5,71 +5,67 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyungjup <hyungjup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/10 13:40:56 by hyungjup          #+#    #+#             */
-/*   Updated: 2023/01/12 10:49:37 by hyungjup         ###   ########.fr       */
+/*   Created: 2023/01/12 16:11:43 by hyungjup          #+#    #+#             */
+/*   Updated: 2023/01/16 11:46:01 by hyungjup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	ft_child_process(t_pipex pipex, char **av, char **envp)
+void	ft_child_process(t_pipex pipex, char *av[], char *envp[])
 {
-	dup2(pipex.fd[1], 1);
+	pipex.infile = open(av[1], O_RDONLY);
+	if (pipex.infile == -1)
+		ft_error("Infile is not exist");
+	dup2(pipex.fd[1], STDOUT_FILENO);
+	dup2(pipex.infile, STDIN_FILENO);
 	close(pipex.fd[0]);
-	dup2(pipex.infile, 0);
 	pipex.cmd_args = ft_split(av[2], ' ');
 	pipex.cmd = find_cmd(pipex.cmd_paths, pipex.cmd_args[0]);
 	if (!pipex.cmd)
 	{
 		ft_child_free(pipex);
-		error_msg("Command not found");
-		exit(1);
+		ft_error("Command not found");
 	}
-	if (execve(pipex.cmd, pipex.cmd_args, envp) == -1)
-		error_msg("execve error");
+	execve(pipex.cmd, pipex.cmd_args, envp);
 }
 
-void	ft_parent_process(t_pipex pipex, char **av, char **envp)
+void	ft_parent_process(t_pipex pipex, char *av[], char *envp[])
 {
-	dup2(pipex.fd[0], 0);
+	pipex.outfile = open (av[4], O_TRUNC | O_CREAT | O_RDWR, 0644);
+	if (pipex.outfile == -1)
+		ft_error("Permission denied");
+	dup2(pipex.fd[0], STDIN_FILENO);
+	dup2(pipex.outfile, STDOUT_FILENO);
 	close(pipex.fd[1]);
-	dup2(pipex.outfile, 1);
 	pipex.cmd_args = ft_split(av[3], ' ');
 	pipex.cmd = find_cmd(pipex.cmd_paths, pipex.cmd_args[0]);
 	if (!pipex.cmd)
 	{
-		ft_parent_free(pipex);
-		error_msg("Command not found");
-		exit(1);
+		ft_child_free(pipex);
+		ft_error("Command not found");
 	}
-	if (execve(pipex.cmd, pipex.cmd_args, envp) == -1)
-		error_msg("execve error");
+	waitpid(pipex.pid, NULL, WNOHANG);
+	execve(pipex.cmd, pipex.cmd_args, envp);
 }
 
-int	main(int ac, char **av, char **envp)
+int	main(int ac, char *av[], char *envp[])
 {
 	t_pipex	pipex;
 
 	if (ac != 5)
-		error_msg("Invalid numbers of arguments");
-	pipex.infile = open(av[1], O_RDONLY);
-	if (pipex.infile < 0)
-		error_msg("Infile is not exist");
-	pipex.outfile = open(av[ac - 1], O_TRUNC | O_CREAT | O_RDWR, 0644);
-	if (pipex.outfile < 0)
-		error_msg("Permission denied\n");
-	if (pipe(pipex.fd) < 0)
-		error_msg("Pipe Error");
+		ft_error("Invalid numbers of arguments");
+	if (pipe(pipex.fd) == -1)
+		ft_error("Pipe Error");
 	pipex.paths = find_path(envp);
 	pipex.cmd_paths = ft_split(pipex.paths, ':');
 	pipex.pid = fork();
 	if (pipex.pid == -1)
-		error_msg("Fork Error");
+		ft_error("Fork Error");
 	else if (pipex.pid == 0)
 		ft_child_process(pipex, av, envp);
 	else
 		ft_parent_process(pipex, av, envp);
-	waitpid(pipex.pid, NULL, 0);
 	ft_parent_free(pipex);
 	return (0);
 }

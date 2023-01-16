@@ -1,42 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyungjup <hyungjup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/13 12:47:56 by hyungjup          #+#    #+#             */
-/*   Updated: 2023/01/16 11:46:54 by hyungjup         ###   ########.fr       */
+/*   Created: 2022/11/09 13:06:31 by hyungjup          #+#    #+#             */
+/*   Updated: 2022/11/23 11:30:49 by hyungjup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	ft_child_free(t_pipex pipex)
+void	*ft_memmove(void *dest, const void *src, size_t len)
 {
-	int	i;
+	size_t			i;
+	unsigned char	*dest_tmp;
+	unsigned char	*src_tmp;
 
-	i = 0;
-	while (pipex.cmd_args[i])
+	if (!dest && !src)
+		return (NULL);
+	dest_tmp = (unsigned char *)dest;
+	src_tmp = (unsigned char *)src;
+	i = -1;
+	if (dest >= src)
 	{
-		free(pipex.cmd_args[i]);
-		i++;
+		while (++i < len)
+			dest_tmp[len - i - 1] = src_tmp[len - i - 1];
 	}
-	free(pipex.cmd_args);
-	free(pipex.cmd);
-}
-
-void	ft_parent_free(t_pipex pipex)
-{
-	int	i;
-
-	i = 0;
-	close(pipex.infile);
-	close(pipex.outfile);
-	while (pipex.cmd_paths[i])
+	else
 	{
-		free(pipex.cmd_paths[i]);
-		i++;
+		while (++i < len)
+			dest_tmp[i] = src_tmp[i];
 	}
-	free(pipex.cmd_paths);
+	return (dest);
 }

@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyungjup <hyungjup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/10 16:43:44 by hyungjup          #+#    #+#             */
-/*   Updated: 2023/01/10 16:43:57 by hyungjup         ###   ########.fr       */
+/*   Created: 2022/11/11 13:36:20 by hyungjup          #+#    #+#             */
+/*   Updated: 2023/01/16 11:59:20 by hyungjup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
 static int	word_count(char const *str, char c)
 {
@@ -55,7 +55,7 @@ static char	*str_word_print(char const *str, char c)
 	return (word);
 }
 
-static void	free_split(char **arr, int index)
+void	free_split(char **arr, int index)
 {
 	int	i;
 

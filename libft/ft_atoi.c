@@ -1,42 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyungjup <hyungjup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/13 12:47:56 by hyungjup          #+#    #+#             */
-/*   Updated: 2023/01/16 11:46:54 by hyungjup         ###   ########.fr       */
+/*   Created: 2022/11/10 14:24:53 by hyungjup          #+#    #+#             */
+/*   Updated: 2022/11/16 18:07:34 by hyungjup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	ft_child_free(t_pipex pipex)
+int	ft_atoi(const char *str)
 {
-	int	i;
+	int	sign;
+	int	num;
 
-	i = 0;
-	while (pipex.cmd_args[i])
+	sign = 1;
+	num = 0;
+	while ((9 <= *str && *str <= 13) || *str == 32)
+		str++;
+	if (*str == '-' || *str == '+')
 	{
-		free(pipex.cmd_args[i]);
-		i++;
+		if (*str == '-')
+			sign *= -1;
+		str++;
 	}
-	free(pipex.cmd_args);
-	free(pipex.cmd);
-}
-
-void	ft_parent_free(t_pipex pipex)
-{
-	int	i;
-
-	i = 0;
-	close(pipex.infile);
-	close(pipex.outfile);
-	while (pipex.cmd_paths[i])
+	while (ft_isdigit(*str))
 	{
-		free(pipex.cmd_paths[i]);
-		i++;
+		num = num * 10 + (*str - '0');
+		str++;
 	}
-	free(pipex.cmd_paths);
+	return (sign * num);
 }
